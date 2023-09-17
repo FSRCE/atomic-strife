@@ -1,0 +1,186 @@
+
+[core]
+
+tags:单位
+#strictLevel:1 = Error on repeated keys, and missing build links
+
+strictLevel: 1
+
+defineUnitMemory: number teamId
+
+autoTriggerCooldownTime:0
+autoTriggerCooldownTime_allowDangerousHighCPU:true
+
+#switchPriceWithStreamingCost:true
+
+[global_resource_原子能]
+
+displayName: 原子能
+
+displayColor: #750000
+
+hidden: false
+
+[global_resource_电力]
+
+displayName: 电力
+
+displayColor: #FFFF33
+
+hidden: false
+
+[global_resource_塌陷原子]
+
+displayName: 塌陷原子
+
+displayColor: #000000
+
+hidden: false
+
+[global_resource_原型资料]
+
+displayName: 原型资料
+
+displayColor: #00CCFF
+
+hidden: false
+
+[hiddenAction_confirmMemory]
+autoTriggerOnEvent: created
+setUnitMemory: teamId=self.teamId
+
+[hiddenAction_resetTeam0]
+switchToTeam: memory.teamId
+autoTrigger: if memory.teamId!=self.teamId and self.resource.被控制==1
+
+[resource_被控制]
+hidden: true
+
+[resource_控制]
+hidden: true
+
+[hiddenAction_心控资源]
+addResources: 被控制=1
+autoTriggerOnEvent: created
+requireConditional:if not self.isOnNeutralTeam()
+
+[resource_时间停止]
+displayName: 时间停止
+displayNameShort: 时间停止
+displayColor: #66FFFF
+hidden: false
+
+[hiddenAction_时间停止1]
+autoTrigger: if self.resource.时间停止<1 and not self.tags(includes='切割') and not self.tags(includes='聚变电厂') and not self.tags(includes='审判级终结战舰') and not self.tags(includes='粒子崩坏炮台') and not self.tags(includes='崩坏激光') and not self.tags(includes='崩坏导弹') and not self.tags(includes='发电') and not self.tags(includes='殒命') and not self.tags(includes='抹除') and not self.tags(includes='分子陨落者') 
+resetUnitStats:true
+
+[hiddenAction_时间停止2]
+autoTrigger: if self.resource.时间停止>0 and not self.tags(includes='切割') and not self.tags(includes='分子陨落者') 
+setUnitStats: moveSpeed=0,maxTurnSpeed=0, maxAttackRange=0
+addResources: 时间停止=-1
+spawnEffects: CUSTOM:秒表
+highPriorityQueue:true
+clearActiveWaypoint:true
+addAllActionCooldownsTime:0.1s
+
+[effect_秒表]
+priority: critical
+alwayStartDirAtZero:true
+image: ROOT:效果图片/秒表.png
+life: 2.5
+fadeOut: true
+attachedToUnit: true
+scaleFrom: 0.8
+scaleTo: 0.8
+alpha: 1
+drawUnderUnits: false
+
+[resource_减速]
+displayName: 减速
+displayNameShort: 减速
+displayColor: #66FFFF
+hidden: false
+
+[hiddenAction_减速1]
+autoTrigger: if self.resource.减速<1 and self.resource.时间停止<1 and not self.tags(includes='分子陨落者') 
+setUnitStats: moveSpeed=${movement.moveSpeed}
+
+[hiddenAction_减速2]
+autoTrigger: if self.resource.减速>0 and not self.tags(includes='分子陨落者') 
+setUnitStats: moveSpeed=${movement.moveSpeed*0.4}
+addResources: 减速=-1
+spawnEffects: CUSTOM:减速
+
+[effect_减速]
+priority: critical
+alwayStartDirAtZero:true
+image: ROOT:效果图片/减速.png
+life: 2.5
+fadeOut: true
+attachedToUnit: true
+scaleFrom: 1
+scaleTo: 1
+alpha: 1
+drawUnderUnits: false
+
+[resource_燃烧]
+displayName: 燃烧
+displayNameShort: 燃烧
+displayColor: #66FFFF
+hidden: false
+
+[hiddenAction_燃烧]
+autoTrigger: if self.resource.燃烧>0 and not self.tags(includes='分子陨落者') 
+addResources: 燃烧=-1 , hp=-1
+spawnEffects: CUSTOM:燃烧
+
+[effect_燃烧]
+priority: critical
+alwayStartDirAtZero:true
+image: ROOT:效果图片/燃烧.png
+life: 2.5
+fadeOut: true
+attachedToUnit: true
+scaleFrom: 1
+scaleTo: 1
+alpha: 1
+drawUnderUnits: false
+
+[resource_崩坏]
+displayName: 崩坏
+displayNameShort: 崩坏
+displayColor: #66FFFF
+hidden: false
+
+[hiddenAction_崩坏1]
+autoTrigger: if self.resource.崩坏>0 and not self.tags(includes='分子陨落者') 
+addResources: 崩坏=-0.01
+spawnEffects: CUSTOM:崩坏
+
+[hiddenAction_崩坏2]
+autoTrigger: if self.resource.崩坏>300 and not self.tags(includes='分子陨落者') 
+deleteSelf: true
+spawnEffects: CUSTOM:湮灭
+
+[effect_崩坏]
+priority: critical
+alwayStartDirAtZero:true
+image: ROOT:效果图片/崩坏.png
+life: 5
+fadeOut: true
+attachedToUnit: true
+scaleFrom:1
+scaleTo: 1
+alpha: 1
+drawUnderUnits: false
+
+[effect_湮灭]
+image:SHARED:light_50.png
+scaleFrom:10
+scaleTo:6
+life:200
+fadeOut:true
+alpha: 2
+priority:critical
+color: #63e6e8
+

@@ -1,0 +1,9 @@
+[mod]
+title: 原子纷争V3.58
+description:\n-作者：屑路人mmp\n-致谢名单：\n-感谢：一个孤独的基地&233gcuh 自愿提供的贴图 \n-感谢：一只概念坦克 提供灵感\n-感谢：学画画的十山月&幻影&双管MZM 的代码帮助 \n-这是一个有点不平衡的模组\n-模组与其他大多数模组不兼容，1.15p5以下会出现BUG\n-可外传，但不能拆包盗贴图\n模组最新版QQ群获取：\n    一群：517181651\n    二群：983157335\n    三群：932940837\n\n\n-该模组目前背景不稳定，玩家可以自行想象\n（有些零碎的背景故事在单位简介里）
+
+thumbnail: mod图片.png
+
+[music]
+sourceFolder:music/
+whenUsingUnitsFromThisMod_playExclusively:true
